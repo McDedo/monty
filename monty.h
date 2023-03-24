@@ -1,11 +1,15 @@
-#ifndef MONTY_H
-#define MONTY_H
+#ifndef _MONTY_H_
+#define _MONTY_H_
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <string.h>
+#include <errno.h>
 
-#define DELIMATOR "\n\t\r "
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -14,7 +18,7 @@
  *
  * Description: doubly linked list node structure
  * for stack, queues, LIFO, FIFO Holberton project
- **/
+ */
 typedef struct stack_s
 {
 	int n;
@@ -29,30 +33,28 @@ typedef struct stack_s
  *
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO Holberton project
- **/
+ */
 typedef struct instruction_s
 {
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/**
-* struct global_s - hold global variables
-* @return_val: return value
-* @mol: mode of list
-* @cc: code command
-* @apc: push command
-**/
+/* extern int nodeval; */
+extern int nodeval;
 
-extern instruction_t opcodes[];
-unsigned int len(stack_t **stack);
-void free_stack(stack_t *stack);
-void nop(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void push(stack_t **stack, char *n, unsigned int line_number);
+void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
-int find_opcode(stack_t **stack, char *opcode, int line_number);
+void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
-size_t lol(stack_t *h);
-#endif
+void add(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
+void _div(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
+int parse(char *line, stack_t **stack, unsigned int line_number);
+int chkopcode(char *opcode, stack_t **stack, unsigned int line_number);
+void free_Stack(stack_t **stack);
+
+#endif /* _MONTY_H_ */
